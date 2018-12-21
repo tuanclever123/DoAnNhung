@@ -1,0 +1,88 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.26.2.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: abc abc, abc, LIC=32BTG-VQZJP-FVA1N-YVUG6-FI8FH-SA58J
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.26.2.0
+Toolchain Path:  E:\Program Files\Keil C\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.26.2.0
+Dialog DLL:      DARMCM1.DLL V1.19.1.0
+Target DLL:      NULink\Nu_Link.dll V2.05
+Dialog DLL:      TARMCM1.DLL V1.14.0.0
+ 
+<h2>Project:</h2>
+E:\UIT - KTMT\4_1\Embedded\NUC131BSP_Tutorial\NUC131BSP_v3.00.003\SampleCode\StdDriver\UART_TxRx_Function\KEIL\UART_TxRx_Function.uvprojx
+Project File Date:  12/17/2018
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\Program Files\Keil C\ARM\ARMCC\Bin'
+Rebuild target 'UART_TxRx_Function'
+creating preprocessor file for system_NUC131.c...
+creating preprocessor file for main.c...
+assembling startup_NUC131.s...
+creating preprocessor file for clk.c...
+compiling clk.c...
+compiling system_NUC131.c...
+compiling main.c...
+..\main.c(211): warning:  #111-D: statement is unreachable
+  			break;
+..\main.c(218): warning:  #111-D: statement is unreachable
+  			break;
+..\main.c(225): warning:  #111-D: statement is unreachable
+  			break;
+..\main.c(232): warning:  #111-D: statement is unreachable
+  			break;
+..\main.c: 4 warnings, 0 errors
+creating preprocessor file for retarget.c...
+creating preprocessor file for sys.c...
+creating preprocessor file for uart.c...
+compiling retarget.c...
+creating preprocessor file for timer.c...
+compiling sys.c...
+compiling uart.c...
+creating preprocessor file for gpio.c...
+creating preprocessor file for pwm.c...
+compiling timer.c...
+compiling gpio.c...
+compiling pwm.c...
+linking...
+Program Size: Code=4544 RO-data=360 RW-data=92 ZI-data=1028  
+After Build - User command #1: fromelf --bin ".\obj\UART_TxRxFunction.axf" --output ".\obj\UART_TxRxFunction.bin"
+After Build - User command #2: fromelf --text -c ".\obj\UART_TxRxFunction.axf" --output ".\obj\UART_TxRxFunction.txt"
+".\obj\UART_TxRxFunction.axf" - 0 Error(s), 4 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.4.0.pack
+                ARM.CMSIS.5.4.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.1.2
+
+Package Vendor: Nuvoton
+                http://www.nuvoton.com/hq/enu/Documents/KEILSoftwarePack/Nuvoton.NuMicro_DFP.1.3.2.pack
+                Nuvoton.NuMicro_DFP.1.3.2
+                Nuvoton ARM Cortex-M NuMicro Family Device Support
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_UART_TxRx_Function
+  E:\Program Files\Keil C\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include
+  E:\Program Files\Keil C\ARM\PACK\Nuvoton\NuMicro_DFP\1.3.2\Device\NUC131\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.1.2
+Build Time Elapsed:  00:00:16
+</pre>
+</body>
+</html>
