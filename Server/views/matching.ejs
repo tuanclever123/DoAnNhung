@@ -1,0 +1,50 @@
+<!-- views/login.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Choose an enemy</title>
+      <link rel="stylesheet" href="/css/bootstrap.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <nav>
+          <ul class="nav nav-pills pull-right">
+              <li role="presentation"><a href="/logout">Log out</a></li>
+          </ul>
+        </nav>
+</head>
+<body>
+<div class="container">
+
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="fa fa-sign-in"></span>Choose an enemy</h1>
+
+    <!-- show any messages that come back with authentication -->
+    <% if (message.length > 0) { %>
+        <div class="alert alert-success"><%= message %></div>
+    <% } %>
+
+    <!-- LOGIN FORM -->
+    <form action="/matching" method="post">
+        <div class="form-group">
+            <label>Enemy's username</label>
+            <input type="text" class="form-control" name="enemy">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    </form>
+
+    <hr>
+
+     <nav>
+          <ul class="nav nav-pills pull-right">
+              <li role="presentation"><a href="/mapping2">Go to the battlefield</a></li>
+          </ul>
+        </nav>
+
+</div>
+
+</div>
+</body>
+</html>

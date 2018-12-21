@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <script type="text/javascript">
+ 
+   <!--
+   
+   function getConfirmation(){
+               var retVal = confirm("Do you want to continue ?");
+               if( retVal == true ){
+                  window.location.href = "/matching";
+                  return true;
+               }
+               else{
+                  
+                  return false;
+                          }
+            }
+         //-->
+      </script>
+      
+      
+      
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+     
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <style>
+  td.select{
+            border-style: solid;
+            border-width: 2px;
+            border-color: green;
+  }
+  
+  </style>
+    <title>Mapping</title>
+  </head>
+  <body>
+  <nav>
+        
+           <form>
+         <input type="button" value="Surrender" onclick="getConfirmation();" />
+      </form>
+        </nav>
+    <h1>Map</h1>
+    <table class="table table-bordered text-center">
+    <caption>User map</caption>
+  <thead>
+    <tr>
+      <th scope="col">y\x</th>
+      <th scope="col">0</th>
+      <th scope="col">1</th>
+      <th scope="col">2</th>
+      <th scope="col">3</th>
+      <th scope="col">4</th>
+      <th scope="col">5</th>
+      <th scope="col">6</th>
+      <th scope="col">7</th>
+    </tr>
+  </thead>
+  <tbody id ="bodytable1">
+    
+  </tbody>
+</table>
+<h2 id = "turn"></h2>
+<p id="timer"></p>
+<table class="table table-bordered text-center">
+    <caption>Enemy map</caption>
+  <thead>
+    <tr>
+      <th scope="col">y\x</th>
+      <th scope="col">0</th>
+      <th scope="col">1</th>
+      <th scope="col">2</th>
+      <th scope="col">3</th>
+      <th scope="col">4</th>
+      <th scope="col">5</th>
+      <th scope="col">6</th>
+      <th scope="col">7</th>
+    </tr>
+  </thead>
+  <tbody id ="bodytable2">
+    
+  </tbody>
+</table>
+<p id = "test1"><%=useraut%></p>
+<p id = "test2"><%=indexaut%></p>
+
+<p id = "test5"></p>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io('/mapping2');
+      
+      socket.on('connect', function(){
+      });
+      
+      var index;
+      var user = document.getElementById('test1').innerHTML;
+      var ta;
+      var dich;
+      var check =false;
+      var seacond = 60;
+      var checkwin = 0;
+      var checklose = 0;
+      var this_turn=false;
+      
+      
+    
+      document.getElementById('bodytable1').innerHTML='';
+      for(var i = 0;i<8;i++){
+        var temp = '<tr>';
+        temp +='<th scope=\"row\">'+i+'</th>';
+        for(var j = 0;j<8;j++){
+          
+          temp +='<td id=\"table1_'+j+'_'+i+'\", class=\"\">'+i+j+'</td>';
+               
+        }
+        temp += '</tr>'
+        document.getElementById('bodytable1').innerHTML += temp;
+        temp='';
+      }
+       
+      document.getElementById('bodytable2').innerHTML='';
+      for(var i = 0;i<8;i++){
+        var temp = '<tr>';
+        temp +='<th scope=\"row\">'+i+'</th>';
+        for(var j = 0;j<8;j++){
+          temp +='<td id=\"table2_'+j+'_'+i+'\", class=\" \">'+i+j+'</td>';
+        }
+        temp += '</tr>'
+        document.getElementById('bodytable2').innerHTML += temp;
+        temp='';
+      }
+      
+      
+      
+      
+      setInterval(function(){
+        socket.emit('get user',user);
+      }, 1000);
+     
+      socket.on('update tadich',function(map_ta,map_dich,info,index_a,isTurn,countdown){
+        ta=map_ta;
+        dich =map_dich;
+        index = index_a;
+        if(this_turn!=isTurn)
+        {
+          countdown=60;
+        }
+        this_turn=isTurn;
+        document.getElementById('timer').innerHTML = "Time left: "+countdown+"s";
+        countdown--;
+        socket.emit('update countdown',countdown);
+        if(countdown<0)
+        {
+          alert("You lose");
+          window.location.href="/matching";
+        }
+        if(isTurn)
+        {
+          document.getElementById('turn').innerHTML ="Your Turn";
+        }
+        else
+        {
+          document.getElementById('turn').innerHTML ="Enemy Turn";
+        }
+       
+        checkwin =0;
+        checklose=0;
+        for(var i = 0; i<8;i++)
+        {
+          for(var j = 0; j<8;j++)
+          {
+            var temp = "table1_"+j+"_"+i;
+            var temp1 = "table2_"+j+"_"+i;
+            if(map_ta[j][i]=='B')
+            {
+              checklose++;
+             document.getElementById(temp).setAttribute("class","bg-danger");
+            }
+            else if(map_ta[j][i]=='S')
+            {
+             
+              document.getElementById(temp).setAttribute("class","bg-dark");
+            }
+            else if(map_ta[j][i]=='A')
+            {
+              
+              document.getElementById(temp).setAttribute("class","table-success");
+            }
+            else
+            {
+              document.getElementById(temp).setAttribute("class","");
+            }
+            
+            if(info[index].locatex == j && info[index].locatey ==i)
+            {
+              if(dich[j][i]=='B')
+              {
+                checkwin++;
+                document.getElementById(temp1).setAttribute("class","bg-danger select");
+              }
+              else if(dich[j][i]=='S')
+              {
+                document.getElementById(temp1).setAttribute("class","bg-dark select");
+              }
+              else
+              {
+                document.getElementById(temp1).setAttribute("class","select");
+              }
+            }
+            else
+            {
+              if(dich[j][i]=='B')
+              {
+                checkwin++;
+                document.getElementById(temp1).setAttribute("class","bg-danger");
+              }
+              else if(dich[j][i]=='S')
+              {
+                document.getElementById(temp1).setAttribute("class","bg-dark");
+              }
+              else
+              {
+                document.getElementById(temp1).setAttribute("class","");
+              }
+            }
+          }  
+            
+        }
+     
+          if(checkwin ==8)
+          {
+            alert("You win");
+            window.location.href="/matching";
+          }
+   
+           if(checklose ==8)
+          {
+            alert("You lose");
+            window.location.href="/matching";
+          }
+          if(info[index].isFire==true)
+            socket.emit('user fire',index);
+      });
+      socket.on('update map', function(info){
+          
+          for(var i = 0; i<8;i++)
+          {
+            for(var j = 0; j<8;j++)
+            {
+              //var temp = "table1_"+j+"_"+i;
+              var temp1 = "table2_"+j+"_"+i;
+              /*if(map_ta[j][i]=='B')
+              {
+              
+               document.getElementById(temp).setAttribute("class","bg-danger");
+              }
+              else if(map_ta[j][i]=='S')
+              {
+               
+                document.getElementById(temp).setAttribute("class","bg-dark");
+              }
+              else if(map_ta[j][i]=='A')
+              {
+                
+                document.getElementById(temp).setAttribute("class","table-success");
+              }
+              else
+              {
+                document.getElementById(temp).setAttribute("class","");
+              }*/
+              
+              if(info[index].locatex == j && info[index].locatey ==i)
+              {
+                if(dich[j][i]=='B')
+                {
+                   document.getElementById(temp1).setAttribute("class","bg-danger select");
+                }
+                else if(dich[j][i]=='S')
+                {
+                  document.getElementById(temp1).setAttribute("class","bg-dark select");
+                }
+                else
+                {
+                  document.getElementById(temp1).setAttribute("class","select");
+                }
+              }
+              else
+              {
+                if(dich[j][i]=='B')
+                {
+                   document.getElementById(temp1).setAttribute("class","bg-danger");
+                }
+                else if(dich[j][i]=='S')
+                {
+                  document.getElementById(temp1).setAttribute("class","bg-dark");
+                }
+                else
+                {
+                  document.getElementById(temp1).setAttribute("class","");
+                }
+              }
+            }  
+              
+          }
+         
+          if(info[index].isFire==true)
+          {
+            socket.emit('user fire',index);
+             
+          }
+        });
+        /* Hien thi len terminal neu board bi disconnect*/
+      socket.on('disconnected controller',function(vitri){
+        if(vitri == index)
+        {
+          alert("Disconnect form your board, visit /listboard to reconnect")
+          
+        }
+      });
+      /* Load source script*/
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+  </body>
+</html>
